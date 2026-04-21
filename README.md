@@ -14,6 +14,32 @@ uv run fastapi dev app/main.py
 python scripts/seed.py --file path/to/profiles.json
 ```
 
+### One-Time Seed Endpoint (for Cloud Environments)
+
+Use this when you cannot run scripts directly on the deployed server.
+
+Set env vars in your deployment:
+
+```bash
+INTERNAL_SEED_ENABLED=true
+INTERNAL_SEED_TOKEN=<strong-random-secret>
+INTERNAL_SEED_FILE=seed_profiles.json
+```
+
+Trigger the seed once:
+
+```bash
+curl -X POST "https://<your-app-domain>/internal/seed" \
+    -H "X-Seed-Token: <strong-random-secret>"
+```
+
+Important behavior:
+
+- Endpoint is disabled unless `INTERNAL_SEED_ENABLED=true`.
+- Token must match `INTERNAL_SEED_TOKEN`.
+- Endpoint is one-time only and returns conflict on repeated calls.
+- Turn `INTERNAL_SEED_ENABLED` back to `false` after successful seeding.
+
 ---
 
 ## Endpoints
@@ -24,6 +50,7 @@ python scripts/seed.py --file path/to/profiles.json
 | GET | `/api/profiles/search?q=` | Natural language search |
 | GET | `/api/profiles/{id}` | Get single profile by UUID |
 | DELETE | `/api/profiles/{id}` | Delete a profile |
+| POST | `/internal/seed` | Token-protected one-time seed trigger |
 
 ### Filter Parameters (`GET /api/profiles`)
 

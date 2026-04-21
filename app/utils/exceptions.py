@@ -43,6 +43,24 @@ class NotFoundError(AppBaseException):
     default_message = "Resource not found"
 
 
+class ForbiddenError(AppBaseException):
+    """
+    403 — Request is understood but not allowed.
+    Examples: invalid internal seed token, disabled internal endpoint.
+    """
+    status_code = 403
+    default_message = "Forbidden"
+
+
+class ConflictError(AppBaseException):
+    """
+    409 — Resource state conflicts with requested operation.
+    Examples: one-time seed endpoint called more than once.
+    """
+    status_code = 409
+    default_message = "Conflict"
+
+
 class UnprocessableError(AppBaseException):
     """
     422 — Request is structurally valid but semantically invalid.
