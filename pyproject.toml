@@ -7,13 +7,16 @@ name = "inteligent-query-system"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
-    "fastapi[standard]>=0.136.0",
+    "fastapi[standard]>=0.115.0",
     "psycopg2>=2.9.11",
     "sqlmodel>=0.0.38",
     "uuid6>=2025.0.1",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
 
 [tool.fastapi]
 app = "main:app"
