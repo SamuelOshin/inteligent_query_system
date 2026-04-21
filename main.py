@@ -20,6 +20,7 @@ from fastapi.exceptions import RequestValidationError
 
 from app.core.config import settings
 from app.db.database import create_db_and_tables
+from app.routes.internal import router as internal_router
 from app.routes.profiles import router as profiles_router
 from app.utils.exceptions import AppBaseException
 from app.utils.responses import error_response
@@ -46,7 +47,7 @@ def read_root():
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -86,6 +87,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # ─── Routers ──────────────────────────────────────────────────────────────────
 
+app.include_router(internal_router)
 app.include_router(profiles_router)
 
 
