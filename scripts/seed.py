@@ -183,6 +183,7 @@ def seed(file_path: str):
             session.commit()
 
     print(f"\n✅ Seeding complete: {inserted} inserted, {skipped} skipped.")
+    return inserted, skipped
 
 
 if __name__ == "__main__":
